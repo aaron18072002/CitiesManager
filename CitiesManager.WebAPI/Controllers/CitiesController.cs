@@ -31,12 +31,12 @@ namespace CitiesManager.WebAPI.Controllers
             this._logger.LogInformation("{ControllerName}.{MethodName} action GET method",
                 nameof(CitiesController), nameof(this.GetCities));
 
-            return await this._context.Cities.ToListAsync();
+            return await this._context.Cities.OrderBy(c => c.CityName).ToListAsync();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
         [Route("[action]")]
-        public async Task<ActionResult<City>> GetCity(Guid id)
+        public async Task<ActionResult<City>> GetCity([FromQuery]Guid id)
         {
             this._logger.LogInformation("{ControllerName}.{MethodName} action GET method",
                 nameof(CitiesController), nameof(this.GetCity));
@@ -51,9 +51,9 @@ namespace CitiesManager.WebAPI.Controllers
             return city;
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         [Route("[action]")]
-        public async Task<IActionResult> PutCity(Guid id, City city)
+        public async Task<IActionResult> PutCity([FromQuery] Guid id,[FromBody] City city)
         {
             this._logger.LogInformation("{ControllerName}.{MethodName} action PUT method",
                 nameof(CitiesController), nameof(this.PutCity));
@@ -86,7 +86,7 @@ namespace CitiesManager.WebAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<ActionResult<City>> PostCity(City city)
+        public async Task<ActionResult<City>> PostCity([FromBody]City city)
         {
             this._logger.LogInformation("{ControllerName}.{MethodName} action POST method",
                 nameof(CitiesController), nameof(this.PostCity));
@@ -97,7 +97,7 @@ namespace CitiesManager.WebAPI.Controllers
             return CreatedAtAction("GetCity", new { id = city.CityId }, city);
         }
 
-        [HttpDelete()]
+        [HttpDelete]
         [Route("[action]")]
         public async Task<IActionResult> DeleteCity([FromQuery]Guid id)
         {
