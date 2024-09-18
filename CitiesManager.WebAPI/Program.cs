@@ -1,3 +1,6 @@
+using CitiesManager.WebAPI.DatabaseContext;
+using Microsoft.EntityFrameworkCore;
+
 namespace CitiesManager.WebAPI
 {
     public class Program
@@ -9,6 +12,11 @@ namespace CitiesManager.WebAPI
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+            });
 
             var app = builder.Build();
 
