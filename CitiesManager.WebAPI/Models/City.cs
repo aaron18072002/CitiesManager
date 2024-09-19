@@ -7,8 +7,8 @@ namespace CitiesManager.WebAPI.Models
         [Key]
         public Guid CityId { get; set; }
 
-        [Required]
-        [MaxLength(40)]
+        [Required(ErrorMessage = "City Name is required.")]
+        [MaxLength(40, ErrorMessage = "City Name cannot exceed 40 characters.")]
         public string? CityName { get; set; }
     }
 }
