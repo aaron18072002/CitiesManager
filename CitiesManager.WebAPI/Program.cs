@@ -21,7 +21,11 @@ namespace CitiesManager.WebAPI
 
             //Swagger
             builder.Services.AddEndpointsApiExplorer(); //Generates description for all endpoints
-            builder.Services.AddSwaggerGen(); //generates OpenAPI specification
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.IncludeXmlComments(Path.Combine
+                    (AppContext.BaseDirectory, "api.xml"));
+            }); //generates OpenAPI specification
 
             builder.Services.AddHttpLogging(logging =>
             {
