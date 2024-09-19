@@ -25,7 +25,7 @@ namespace CitiesManager.WebAPI.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        [Route("")]
+        //[Route("")]
         public async Task<ActionResult<IEnumerable<City>>> GetCities()
         {
             this._logger.LogInformation("{ControllerName}.{MethodName} action GET method",
