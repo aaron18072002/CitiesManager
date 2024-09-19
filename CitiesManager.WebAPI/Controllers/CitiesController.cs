@@ -23,6 +23,10 @@ namespace CitiesManager.WebAPI.Controllers
             this._logger = logger;
         }
 
+        /// <summary>
+        /// To get list of cities (including cityId and cityName) from 'Cities' table
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("[action]")]
         //[Route("")]
