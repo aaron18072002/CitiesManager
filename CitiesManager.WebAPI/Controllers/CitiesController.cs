@@ -45,7 +45,8 @@ namespace CitiesManager.WebAPI.Controllers
 
             if (city == null)
             {
-                return NotFound();
+                // return NotFound();
+                return this.Problem(detail: "Invalid CityId", statusCode: 404, title: "City search");
             }
 
             return city;
@@ -61,7 +62,9 @@ namespace CitiesManager.WebAPI.Controllers
 
             if (id != city.CityId)
             {
-                return BadRequest(); //HTTP 400
+                // return BadRequest(); //HTTP 400
+                return this.Problem(detail: "id and city.CityId are not match", 
+                    statusCode: 400, title: "Update city");
             }
 
             //this._context.Entry(city).State = EntityState.Modified;
