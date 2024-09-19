@@ -19,6 +19,10 @@ namespace CitiesManager.WebAPI
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
             });
 
+            //Swagger
+            builder.Services.AddEndpointsApiExplorer(); //Generates description for all endpoints
+            builder.Services.AddSwaggerGen(); //generates OpenAPI specification
+
             builder.Services.AddHttpLogging(logging =>
             {
                 logging.LoggingFields = Microsoft.AspNetCore.HttpLogging.HttpLoggingFields.All;
@@ -42,6 +46,9 @@ namespace CitiesManager.WebAPI
             // Configure the HTTP request pipeline.
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger(); //creates endpoint for swagger.json
+            app.UseSwaggerUI(); //creates swagger UI for testing all Web API endpoints / action methods
 
             app.UseAuthorization();
 
