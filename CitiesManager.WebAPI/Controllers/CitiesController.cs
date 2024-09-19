@@ -53,17 +53,26 @@ namespace CitiesManager.WebAPI.Controllers
 
         [HttpPut]
         [Route("[action]")]
-        public async Task<IActionResult> PutCity([FromQuery] Guid id,[FromBody] City city)
+        public async Task<IActionResult> PutCity([FromQuery] Guid id,
+            [FromBody][Bind(nameof(City.CityId), nameof(City.CityName))] City city)
         {
             this._logger.LogInformation("{ControllerName}.{MethodName} action PUT method",
                 nameof(CitiesController), nameof(this.PutCity));
 
             if (id != city.CityId)
             {
-                return BadRequest();
+                return BadRequest(); //HTTP 400
             }
 
-            this._context.Entry(city).State = EntityState.Modified;
+            //this._context.Entry(city).State = EntityState.Modified;
+            var cityFromDb = await this._context.Cities.FirstOrDefaultAsync(c => c.CityId == id);
+
+            if(cityFromDb == null)
+            {
+                return this.NotFound(); //HTTP 404
+            }
+
+            cityFromDb.CityName = city.CityName;
 
             try
             {
@@ -86,7 +95,8 @@ namespace CitiesManager.WebAPI.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<ActionResult<City>> PostCity([FromBody]City city)
+        public async Task<ActionResult<City>> PostCity
+            ([FromBody][Bind(nameof(City.CityId), nameof(City.CityName))]City city)
         {
             this._logger.LogInformation("{ControllerName}.{MethodName} action POST method",
                 nameof(CitiesController), nameof(this.PostCity));
